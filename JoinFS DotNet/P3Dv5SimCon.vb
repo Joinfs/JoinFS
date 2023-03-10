@@ -56,6 +56,8 @@ Public Class P3Dv5SimCon
         Public GroundSpeed As Double
         Public IndicatedAirSpeed As Double
         Public TrueAirSpeed As Double
+        Public Pitch As Double
+        Public Bank As Double
     End Structure
     ' Output text line number
 
@@ -115,6 +117,8 @@ Public Class P3Dv5SimCon
                 My.Settings.PlaneGSpeed = s1.GroundSpeed.ToString("#0")
                 My.Settings.PlaneIndicatedAirSpeed = s1.IndicatedAirSpeed.ToString("#0")
                 My.Settings.PlaneTrueAirSpeed = s1.TrueAirSpeed.ToString("#0")
+                My.Settings.PlaneBank = s1.Bank.ToString("#0.00")
+                My.Settings.PlanePitch = s1.Pitch.ToString("#0.00")
                 ' Dim name As String = System.Text.Encoding.ASCII.GetString(data.dwData(0), 0, data.dwDefineCount)
 
                 ' Display the simulator name in a message box
@@ -186,6 +190,8 @@ Public Class P3Dv5SimCon
             p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "GROUND VELOCITY", "knots", SIMCONNECT_DATATYPE.FLOAT64, 0, 5)
             p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "AIRSPEED INDICATED", "knots", SIMCONNECT_DATATYPE.FLOAT64, 0, 6)
             p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "AIRSPEED TRUE", "knots", SIMCONNECT_DATATYPE.FLOAT64, 0, 7)
+            p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "ATTITUDE INDICATOR PITCH DEGREES", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0, 8)
+            p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "ATTITUDE INDICATOR BANK DEGREES", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0, 9)
             p3d_simconnect.AddToDataDefinition(Definitions.SIMULATOR_NAME, "Title", "", SIMCONNECT_DATATYPE.STRING256, 0.0, SimConnect.SIMCONNECT_UNUSED)
             p3d_simconnect.RequestDataOnSimObjectType(DATA_REQUESTS.SIMULATOR_NAME, Definitions.SIMULATOR_NAME, 0, SIMCONNECT_SIMOBJECT_TYPE.USER)
 
@@ -234,7 +240,41 @@ Public Class P3Dv5SimCon
         ' Return the location to the method calling the function
         Return Location
     End Function
+    Public Structure SIMCONNECT_DATA_INITPOSITION
+        ' This is how you declare a fixed size string
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=256)>
+        Public Latitude As Double
+        Public Longitude As Double
+        Public Altitude As Double
+        Public Pitch As Double
+        Public Bank As Double
+        Public Heading As Double
+        Public OnGround As Integer ' 1 = on ground, 0 = in air
+        Public Airspeed As Double ' knots
+    End Structure
+    Enum AI_AIRCRAFT_TYPE
+        A320 = 0
+        B747 = 1
+        B737 = 2
+    End Enum
+
+
     Public Shared Function addOtherAircraft()
 
+        Dim initData As Microsoft.FlightSimulator.SimConnect.SIMCONNECT_DATA_INITPOSITION = New Microsoft.FlightSimulator.SimConnect.SIMCONNECT_DATA_INITPOSITION()
+        initData.Latitude = 51.477 ' degrees
+        initData.Longitude = -0.488 ' degrees
+        initData.Altitude = 92 ' feet
+        initData.Pitch = 0.68 ' degrees
+        initData.Bank = 0 ' degrees
+        initData.Heading = 91 ' degrees (will be overridden by the AI system)
+        initData.OnGround = 1 ' in air
+        initData.Airspeed = 0 ' knots (or whatever value you prefer)
+
+        Dim aircraftType As AI_AIRCRAFT_TYPE = AI_AIRCRAFT_TYPE.A320
+        p3d_simconnect.AICreateNonATCAircraft("MyAICraft", "Boeing 737-800", initData, aircraftType)
+        Return Nothing
+
+        ' p3d_simconnect.AICreateNonATCAircraft("title=Boeing 747-8f Asobo", "BA234", AIInitPos(51.47748248, -0.4889861, 92, 0.68, 0.00, 1, 0))
     End Function
 End Class
