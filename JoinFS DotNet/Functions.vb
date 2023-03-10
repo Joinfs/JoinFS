@@ -17,6 +17,7 @@ Imports System.Configuration
 Imports System.Xml
 Imports System.Security.Cryptography
 Imports Newtonsoft.Json.Linq
+Imports System.Net.Http.Headers
 
 Public Class MainVariables
     Public Shared ReadOnly versionText As String = "v4.0.0a"
@@ -56,8 +57,8 @@ Public Class Functions
             If Not Directory.Exists(appData + "\JoinFS") Then
                 Directory.CreateDirectory(appData + "\JoinFS\")
             End If
-            File = My.Computer.FileSystem.OpenTextFileWriter(appData + "\JoinFS\joinfsLog-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt", True)
-            File.WriteLine(Log.RichTextBox1.Text)
+            file = My.Computer.FileSystem.OpenTextFileWriter(appData + "\JoinFS\joinfsLog-" + System.DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt", True)
+            file.WriteLine(Log.RichTextBox1.Text)
             file.Close()
         Else
             AddLogItem("Log Cannot be saved as disabled in File > Settings")
@@ -367,7 +368,7 @@ Public Class Functions
             Dim uri = MainVariables.apiURL
             Dim queryString As String = "?data=clients&va=" & My.Settings.PreferedAirline.ToString()
             Dim completeUrl As String = uri & queryString
-
+            client.DefaultRequestHeaders.Authorization = New AuthenticationHeaderValue("Bearer", APISecurity.getApiJWT())
             Dim response As HttpResponseMessage = client.GetAsync(completeUrl).Result
             If response.IsSuccessStatusCode Then
                 'Read the response content as a string
@@ -376,10 +377,13 @@ Public Class Functions
                 'Parse the JSON response string into a .NET object
                 jsonArray = JArray.Parse(responseContent)
                 'Loop through the result array in the JSON object and add each value to the result array
-            Else
+            ElseIf response.StatusCode = "401" Then
+                MessageBox.Show("Your Client version is currently invalid, please update!")
+                End
                 AddLogItem("Error Getting Json Content of Client List")
                 'API call was unsuccessful, handle the error here
             End If
+
         Catch ex As Exception
             AddLogItem(" test: " + ex.Message)
         End Try
@@ -390,16 +394,15 @@ Public Class Functions
             Dim uri = MainVariables.apiURL
             Dim queryString As String = "?data=valist"
             Dim completeUrl As String = uri & queryString
+            VaClient.DefaultRequestHeaders.Authorization = New AuthenticationHeaderValue("Bearer", APISecurity.getApiJWT())
             Dim response2 As HttpResponseMessage = VaClient.GetAsync(completeUrl).Result
             If response2.IsSuccessStatusCode Then
-                'Read the response content as a string
                 Dim responseContent As String = response2.Content.ReadAsStringAsync().Result
-                '//AddLogItem(responseContent)
-                'Parse the JSON response string into a .NET object
                 vaJsonArray = JArray.Parse(responseContent)
-                'Loop through the result array in the JSON object and add each value to the result array
-            Else
-                'API call was unsuccessful, handle the error here
+            ElseIf response2.StatusCode = "401" Then
+                MessageBox.Show("Your Client version is currently invalid, please update!")
+                End
+
             End If
         Catch ex As Exception
             AddLogItem(ex.Message)
