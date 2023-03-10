@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "JoinFs Client": {
+      "commandName": "Project",
+      "remoteDebugEnabled": true
+    }
+  }
+}
