@@ -53,6 +53,9 @@ Public Class P3Dv5SimCon
         Public longitude As Double
         Public altitude As Double
         Public heading As Double
+        Public GroundSpeed As Double
+        Public IndicatedAirSpeed As Double
+        Public TrueAirSpeed As Double
     End Structure
     ' Output text line number
 
@@ -109,12 +112,16 @@ Public Class P3Dv5SimCon
                 My.Settings.SimAltitude = s1.altitude.ToString("#####0")
                 My.Settings.SimPlaneTitle = s1.title
                 My.Settings.SimHeading = s1.heading.ToString("##0")
+                My.Settings.PlaneGSpeed = s1.GroundSpeed.ToString("#0")
+                My.Settings.PlaneIndicatedAirSpeed = s1.IndicatedAirSpeed.ToString("#0")
+                My.Settings.PlaneTrueAirSpeed = s1.TrueAirSpeed.ToString("#0")
                 ' Dim name As String = System.Text.Encoding.ASCII.GetString(data.dwData(0), 0, data.dwDefineCount)
 
                 ' Display the simulator name in a message box
                 ' MessageBox.Show("Simulator Name: " & name)
                 If My.Settings.EnhancedLogs = True Then
                     AddLogItem("|LA| " + s1.latitude.ToString("##0.00000000") + " |LN| " + s1.longitude.ToString("##0.00000000") + " |A| " + s1.altitude.ToString("#####0") + " |H| " + s1.heading.ToString("##0"))
+                    AddLogItem("|GS| " + My.Settings.PlaneGSpeed + " |IAS| " + My.Settings.PlaneIndicatedAirSpeed + " |TS| " + My.Settings.PlaneTrueAirSpeed)
                 End If
                 JoinFsMain.Button3.BackColor = Color.Green
                 JoinFsMain.ConnectedText.Text = "|LA| " + s1.latitude.ToString("##0.00000000") + " |LN| " + s1.longitude.ToString("##0.00000000") + " |A| " + s1.altitude.ToString("#####0") + " |H| " + s1.heading.ToString("##0")
@@ -176,8 +183,12 @@ Public Class P3Dv5SimCon
             p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "Plane Longitude", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0, 2)
             p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "Plane Altitude", "feet", SIMCONNECT_DATATYPE.FLOAT64, 0, 3)
             p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "PLANE HEADING DEGREES TRUE", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0, 4)
+            p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "GROUND VELOCITY", "knots", SIMCONNECT_DATATYPE.FLOAT64, 0, 5)
+            p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "AIRSPEED INDICATED", "knots", SIMCONNECT_DATATYPE.FLOAT64, 0, 6)
+            p3d_simconnect.AddToDataDefinition(StructDefinitions.Struct1, "AIRSPEED TRUE", "knots", SIMCONNECT_DATATYPE.FLOAT64, 0, 7)
             p3d_simconnect.AddToDataDefinition(Definitions.SIMULATOR_NAME, "Title", "", SIMCONNECT_DATATYPE.STRING256, 0.0, SimConnect.SIMCONNECT_UNUSED)
             p3d_simconnect.RequestDataOnSimObjectType(DATA_REQUESTS.SIMULATOR_NAME, Definitions.SIMULATOR_NAME, 0, SIMCONNECT_SIMOBJECT_TYPE.USER)
+
             ' IMPORTANT: register it with the simconnect managed wrapper marshaller
             ' if you skip this step, you will only receive an int in the .dwData field.
             p3d_simconnect.RegisterDataDefineStruct(Of Struct1)(StructDefinitions.Struct1)

@@ -221,6 +221,42 @@ Namespace My
                 Me("LowBandwidth") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property PlaneGSpeed() As String
+            Get
+                Return CType(Me("PlaneGSpeed"),String)
+            End Get
+            Set
+                Me("PlaneGSpeed") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property PlaneIndicatedAirSpeed() As String
+            Get
+                Return CType(Me("PlaneIndicatedAirSpeed"),String)
+            End Get
+            Set
+                Me("PlaneIndicatedAirSpeed") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property PlaneTrueAirSpeed() As String
+            Get
+                Return CType(Me("PlaneTrueAirSpeed"),String)
+            End Get
+            Set
+                Me("PlaneTrueAirSpeed") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
