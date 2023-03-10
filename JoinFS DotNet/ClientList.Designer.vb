@@ -40,6 +40,7 @@ Partial Class ClientList
         DataGridView1.AllowUserToAddRows = False
         DataGridView1.AllowUserToDeleteRows = False
         DataGridView1.Columns.AddRange(New DataGridViewColumn() {Current, Nickname, VA, Latitude, Longitude, Altitude, Distance})
+        DataGridView1.Cursor = Cursors.IBeam
         DataGridView1.Dock = DockStyle.Fill
         DataGridView1.EditMode = DataGridViewEditMode.EditOnEnter
         DataGridView1.Location = New Point(0, 0)
