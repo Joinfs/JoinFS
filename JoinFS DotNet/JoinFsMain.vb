@@ -170,7 +170,7 @@ Public Class JoinFsMain
     End Sub
 
     Private Async Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        addOtherAircraft()
+        'addOtherAircraft()
         Await NetworkManager()
     End Sub
 
