@@ -38,6 +38,7 @@ Public Class JoinFsMain
         updateVAList()
         AddLogItem("Loaded JoinFS Version 4.0.0")
         ConnectedText.Text = "Disconnected"
+        getSettings()
         If (My.Settings.Nickname.Length > 0) Then
             NickName.Text = My.Settings.Nickname
         End If
@@ -50,10 +51,12 @@ Public Class JoinFsMain
         If VAList.Text = "VirginXL" Then
             PictureBox1.Image = My.Resources.VirginXL
         End If
-        getSettings()
-        BandwidthMode()
         ' Get a random id to make sure we don't generate ourselves within the client once we load network aircraft.
         My.Settings.RandomID = RandomString()
+        If My.Settings.AutoConnect = True Then
+            Button3.PerformClick()
+            Button4.PerformClick()
+        End If
 
     End Sub
     Public Shared Function updateVAList()

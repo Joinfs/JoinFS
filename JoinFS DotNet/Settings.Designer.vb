@@ -32,6 +32,8 @@ Partial Class Settings
         CheckBox1 = New CheckBox()
         Label3 = New Label()
         ComboBox2 = New ComboBox()
+        CheckBox2 = New CheckBox()
+        CheckBox3 = New CheckBox()
         SuspendLayout()
         ' 
         ' DarkMode
@@ -47,7 +49,7 @@ Partial Class Settings
         ' Button1
         ' 
         Button1.Dock = DockStyle.Bottom
-        Button1.Location = New Point(0, 145)
+        Button1.Location = New Point(0, 184)
         Button1.Name = "Button1"
         Button1.Size = New Size(229, 23)
         Button1.TabIndex = 1
@@ -59,7 +61,7 @@ Partial Class Settings
         ComboBox1.DropDownStyle = ComboBoxStyle.DropDownList
         ComboBox1.FormattingEnabled = True
         ComboBox1.Items.AddRange(New Object() {"P3Dv5", "MSFS"})
-        ComboBox1.Location = New Point(87, 58)
+        ComboBox1.Location = New Point(85, 97)
         ComboBox1.Name = "ComboBox1"
         ComboBox1.Size = New Size(137, 23)
         ComboBox1.TabIndex = 2
@@ -67,7 +69,7 @@ Partial Class Settings
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Location = New Point(8, 61)
+        Label1.Location = New Point(6, 100)
         Label1.Name = "Label1"
         Label1.Size = New Size(58, 15)
         Label1.TabIndex = 3
@@ -85,14 +87,14 @@ Partial Class Settings
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(8, 90)
+        Label2.Location = New Point(6, 129)
         Label2.Name = "Label2"
         Label2.Size = New Size(74, 15)
         Label2.TabIndex = 5
         Label2.Text = "SimBrief UN:"' 
         ' TextBox1
         ' 
-        TextBox1.Location = New Point(88, 87)
+        TextBox1.Location = New Point(86, 126)
         TextBox1.Name = "TextBox1"
         TextBox1.Size = New Size(137, 23)
         TextBox1.TabIndex = 6
@@ -110,7 +112,7 @@ Partial Class Settings
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(8, 118)
+        Label3.Location = New Point(6, 157)
         Label3.Name = "Label3"
         Label3.Size = New Size(53, 15)
         Label3.TabIndex = 8
@@ -119,16 +121,38 @@ Partial Class Settings
         ' 
         ComboBox2.FormattingEnabled = True
         ComboBox2.Items.AddRange(New Object() {"Very Slow", "Slow", "Normal", "Fast"})
-        ComboBox2.Location = New Point(87, 115)
+        ComboBox2.Location = New Point(85, 154)
         ComboBox2.Name = "ComboBox2"
         ComboBox2.Size = New Size(138, 23)
         ComboBox2.TabIndex = 9
         ComboBox2.Text = "Normal"' 
+        ' CheckBox2
+        ' 
+        CheckBox2.AutoSize = True
+        CheckBox2.Location = New Point(8, 33)
+        CheckBox2.Name = "CheckBox2"
+        CheckBox2.Size = New Size(83, 19)
+        CheckBox2.TabIndex = 10
+        CheckBox2.Text = "Beta Mode"
+        CheckBox2.UseVisualStyleBackColor = True
+        ' 
+        ' CheckBox3
+        ' 
+        CheckBox3.AutoSize = True
+        CheckBox3.Location = New Point(8, 58)
+        CheckBox3.Name = "CheckBox3"
+        CheckBox3.Size = New Size(100, 19)
+        CheckBox3.TabIndex = 11
+        CheckBox3.Text = "Auto Connect"
+        CheckBox3.UseVisualStyleBackColor = True
+        ' 
         ' Settings
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(229, 168)
+        ClientSize = New Size(229, 207)
+        Controls.Add(CheckBox3)
+        Controls.Add(CheckBox2)
         Controls.Add(ComboBox2)
         Controls.Add(Label3)
         Controls.Add(CheckBox1)
@@ -156,4 +180,6 @@ Partial Class Settings
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents Label3 As Label
     Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents CheckBox2 As CheckBox
+    Friend WithEvents CheckBox3 As CheckBox
 End Class
