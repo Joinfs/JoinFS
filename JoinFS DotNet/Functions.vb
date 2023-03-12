@@ -382,6 +382,31 @@ Public Class Functions
                 '//AddLogItem(responseContent)
                 'Parse the JSON response string into a .NET object
                 jsonArray = JArray.Parse(responseContent)
+                ' 
+                For Each item As JObject In jsonArray
+                    ' Get the nickname from the item and print it
+                    If item("randomID").ToString() = My.Settings.RandomID Then
+                        ' DO NOT ADD OWN AIRCRAFT
+
+                    Else
+                        Dim alt = item("altitude")
+                        Dim lat = item("latitude")
+                        Dim lng = item("longitude")
+                        Dim speed = item("airspeed")
+                        Dim pitch = item("pitch")
+                        Dim bank = item("bank")
+                        Dim heading = item("heading")
+                        Dim callsign As String = item("nickname").ToString().Substring(0, Math.Min(item("callsign").ToString().Length, 6))
+                        Dim ground = 0
+                        If speed.ToString > 180 Then
+                            ground = 1
+                        End If
+                        addOtherAircraft(lat, lng, alt, pitch, bank, heading, speed, ground, callsign)
+                        ' Get the image from the url on the database
+
+                    End If
+                Next
+
                 'Loop through the result array in the JSON object and add each value to the result array
             ElseIf response.StatusCode = "401" Then
                 MessageBox.Show("Your Client version is currently invalid, please update!")
