@@ -18,6 +18,7 @@ Imports System.Runtime.InteropServices
 Imports System.IO
 Imports System.Text.Json.Nodes
 Imports Newtonsoft.Json.Linq
+Imports System.Text.RegularExpressions
 
 Public Class P3Dv5SimCon
     Public Shared p3d_simconnect As SimConnect = Nothing
@@ -258,22 +259,26 @@ Public Class P3Dv5SimCon
         B747 = 1
         B737 = 2
     End Enum
-
-
-    Public Shared Function addOtherAircraft()
+    Private Shared Function IsFLAIModel(title As String) As Boolean
+        ' Check if the aircraft title matches an FLAI model
+        ' This example assumes that the FLAI model title format is "Aircraft Type Airline (Registration | Year | Livery)"
+        Dim regex As New Regex("^[A-Za-z0-9\s]+ \([A-Za-z0-9\s]+ \| [A-Za-z0-9\s]+ \| [A-Za-z0-9\s]+\)$")
+        Return regex.IsMatch(title)
+    End Function
+    Public Shared Function addOtherAircraft(lat As Integer, longitude As Integer, alt As Integer, pitch As Integer, bank As Integer, heading As Integer, speed As Integer, ground As Integer, callsign As String)
 
         Dim initData As Microsoft.FlightSimulator.SimConnect.SIMCONNECT_DATA_INITPOSITION
-        initData.Latitude = 51.477 ' degrees
-        initData.Longitude = -0.488 ' degrees
-        initData.Altitude = 92 ' feet
-        initData.Pitch = 0.68 ' degrees
-        initData.Bank = 0 ' degrees
-        initData.Heading = 91 ' degrees (will be overridden by the AI system)
-        initData.OnGround = 1 ' in air
-        initData.Airspeed = 0 ' knots (or whatever value you prefer)
+        initData.Latitude = lat ' degrees
+        initData.Longitude = longitude ' degrees
+        initData.Altitude = alt ' feet
+        initData.Pitch = pitch ' degrees
+        initData.Bank = bank ' degrees
+        initData.Heading = heading ' degrees (will be overridden by the AI system)
+        initData.OnGround = ground ' in air
+        initData.Airspeed = speed ' knots (or whatever value you prefer)
 
         Dim aircraftType As AI_AIRCRAFT_TYPE = AI_AIRCRAFT_TYPE.A320
-        p3d_simconnect.AICreateNonATCAircraft("Lockheed Martin F-35A Lightning II", "N01000", initData, aircraftType) ' Thanks to Mattia1513 for the code
+        p3d_simconnect.AICreateNonATCAircraft("Lockheed Martin F-35A Lightning II", callsign, initData, aircraftType) ' Thanks to Mattia1513 for the code
         Return Nothing
 
         ' p3d_simconnect.AICreateNonATCAircraft("title=Boeing 747-8f Asobo", "BA234", AIInitPos(51.47748248, -0.4889861, 92, 0.68, 0.00, 1, 0))
