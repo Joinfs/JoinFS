@@ -238,6 +238,7 @@ Public Class Functions
     {"altitude", My.Settings.SimAltitude},
     {"title", My.Settings.SimPlaneTitle},
     {"speed", My.Settings.PlaneGSpeed},
+            {"aspeed", My.Settings.PlaneIndicatedAirSpeed},
                     {"pitch", My.Settings.PlanePitch},
                         {"bank", My.Settings.PlaneBank},
             {"simulator", My.Settings.Simulator},
@@ -312,6 +313,7 @@ Public Class Functions
     {"altitude", My.Settings.SimAltitude},
     {"title", My.Settings.SimPlaneTitle},
         {"speed", My.Settings.PlaneGSpeed},
+        {"aspeed", My.Settings.PlaneIndicatedAirSpeed},
                 {"pitch", My.Settings.PlanePitch},
                         {"bank", My.Settings.PlaneBank},
         {"simulator", My.Settings.Simulator},
@@ -369,8 +371,8 @@ Public Class Functions
         Return Nothing
     End Function
     Public Shared Sub RetrieveJsonData()
-        Try
-            Dim client As New HttpClient()
+        ' Try
+        Dim client As New HttpClient()
             Dim uri = MainVariables.apiURL
             Dim queryString As String = "?data=clients&va=" & My.Settings.PreferedAirline.ToString()
             Dim completeUrl As String = uri & queryString
@@ -384,27 +386,32 @@ Public Class Functions
                 jsonArray = JArray.Parse(responseContent)
                 ' 
                 For Each item As JObject In jsonArray
-                    ' Get the nickname from the item and print it
-                    If item("randomID").ToString() = My.Settings.RandomID Then
-                        ' DO NOT ADD OWN AIRCRAFT
+                ' Get the nickname from the item and print it
+                If item("randomID").ToString() = My.Settings.RandomID Then
+                    ' DO NOT ADD OWN AIRCRAFT
 
-                    Else
-                        Dim alt = item("altitude")
-                        Dim lat = item("latitude")
-                        Dim lng = item("longitude")
-                        Dim speed = item("airspeed")
-                        Dim pitch = item("pitch")
-                        Dim bank = item("bank")
-                        Dim heading = item("heading")
-                        Dim callsign As String = item("nickname").ToString().Substring(0, Math.Min(item("callsign").ToString().Length, 6))
-                        Dim ground = 0
-                        If speed.ToString > 180 Then
-                            ground = 1
-                        End If
-                        addOtherAircraft(lat, lng, alt, pitch, bank, heading, speed, ground, callsign)
-                        ' Get the image from the url on the database
+                Else
+                    Dim alt = item("altitude").ToString()
+                    Dim lat = item("latitude").ToString()
+                    Dim lng = item("longitude").ToString()
+                    Dim speed = item("airspeed").ToString()
+                    Dim pitch = item("pitch").ToString()
+                    Dim bank = item("bank").ToString()
+                    Dim heading = item("heading").ToString()
 
+                    Dim callsign As String = item("nickname").ToString()
+                    callsign = callsign.Substring(0, Math.Min(callsign.ToString().Length, 5))
+                    AddLogItem(speed)
+                    Dim ground = 1
+                    If speed > 180 Then
+                        ground = 1
                     End If
+
+                    addOtherAircraft(lat, lng, alt, pitch, bank, heading, speed, ground, callsign)
+                    'AddLogItem("test 1")
+                    ' Get the image from the url on the database
+
+                End If
                 Next
 
                 'Loop through the result array in the JSON object and add each value to the result array
@@ -415,9 +422,9 @@ Public Class Functions
                 'API call was unsuccessful, handle the error here
             End If
 
-        Catch ex As Exception
-            AddLogItem(" test: " + ex.Message)
-        End Try
+        ' Catch ex As Exception
+        'AddLogItem(" test: " + ex.Message)
+        ' End Try
     End Sub
     Public Shared Sub RetriveVAList()
         Try
