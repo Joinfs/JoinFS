@@ -156,6 +156,7 @@ Public Class P3Dv5SimCon
         AddLogItem("SimObject Recieved Exception")
         JoinFsMain.ConnectedText.Text = "Exception received: " + data.dwException.ToString()
         AddLogItem("Exception recieved : " + data.dwException.ToString())
+        AddLogItem(data.ToString)
         JoinFsMain.Button3.BackColor = Color.Orange
     End Sub
     Public Shared Sub p3d_simconnect_OnRecvOpen(ByVal sender As SimConnect, ByVal data As SIMCONNECT_RECV_OPEN)
@@ -261,7 +262,7 @@ Public Class P3Dv5SimCon
 
     Public Shared Function addOtherAircraft()
 
-        Dim initData As Microsoft.FlightSimulator.SimConnect.SIMCONNECT_DATA_INITPOSITION = New Microsoft.FlightSimulator.SimConnect.SIMCONNECT_DATA_INITPOSITION()
+        Dim initData As Microsoft.FlightSimulator.SimConnect.SIMCONNECT_DATA_INITPOSITION
         initData.Latitude = 51.477 ' degrees
         initData.Longitude = -0.488 ' degrees
         initData.Altitude = 92 ' feet
@@ -272,7 +273,7 @@ Public Class P3Dv5SimCon
         initData.Airspeed = 0 ' knots (or whatever value you prefer)
 
         Dim aircraftType As AI_AIRCRAFT_TYPE = AI_AIRCRAFT_TYPE.A320
-        p3d_simconnect.AICreateNonATCAircraft("MyAICraft", "Boeing 737-800", initData, aircraftType)
+        p3d_simconnect.AICreateNonATCAircraft("Lockheed Martin F-35A Lightning II", "N01000", initData, aircraftType) ' Thanks to Mattia1513 for the code
         Return Nothing
 
         ' p3d_simconnect.AICreateNonATCAircraft("title=Boeing 747-8f Asobo", "BA234", AIInitPos(51.47748248, -0.4889861, 92, 0.68, 0.00, 1, 0))
