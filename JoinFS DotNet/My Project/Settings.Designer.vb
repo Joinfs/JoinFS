@@ -281,6 +281,30 @@ Namespace My
                 Me("PlaneBank") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property BetaMode() As String
+            Get
+                Return CType(Me("BetaMode"),String)
+            End Get
+            Set
+                Me("BetaMode") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property AutoConnect() As String
+            Get
+                Return CType(Me("AutoConnect"),String)
+            End Get
+            Set
+                Me("AutoConnect") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

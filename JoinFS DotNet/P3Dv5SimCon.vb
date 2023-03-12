@@ -277,7 +277,11 @@ Public Class P3Dv5SimCon
         initData.Airspeed = speed ' knots (or whatever value you prefer)
 
         Dim aircraftType As AI_AIRCRAFT_TYPE = AI_AIRCRAFT_TYPE.A320
-        p3d_simconnect.AICreateNonATCAircraft("Lockheed Martin F-35A Lightning II", callsign, initData, aircraftType) ' Thanks to Mattia1513 for the code
+        If My.Settings.BetaMode = True Then
+
+            p3d_simconnect.AICreateNonATCAircraft("Lockheed Martin F-35A Lightning II", callsign, initData, aircraftType) ' Thanks to Mattia1513 for the code
+        End If
+
         Return Nothing
 
     End Function
