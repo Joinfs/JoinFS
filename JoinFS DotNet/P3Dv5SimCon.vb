@@ -160,6 +160,10 @@ Public Class P3Dv5SimCon
         AddLogItem(data.ToString)
         JoinFsMain.Button3.BackColor = Color.Orange
     End Sub
+    Public Shared Sub p3d_simconnect_OnRecvObj(ByVal sender As SimConnect, ByVal data As SIMCONNECT_RECV_ASSIGNED_OBJECT_ID)
+        Dim aircraftId = data.dwObjectID
+        AddLogItem(aircraftId.ToString)
+    End Sub
     Public Shared Sub p3d_simconnect_OnRecvOpen(ByVal sender As SimConnect, ByVal data As SIMCONNECT_RECV_OPEN)
         If My.Settings.EnhancedLogs = True Then
             AddLogItem("SimObject Started - Decoding")
