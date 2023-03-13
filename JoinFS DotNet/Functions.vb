@@ -402,7 +402,7 @@ Public Class Functions
 
                     Dim callsign As String = item("nickname").ToString()
                     callsign = callsign.Substring(0, Math.Min(callsign.ToString().Length, 5))
-                    AddLogItem(speed)
+                    ' AddLogItem(speed)
                     Dim ground = 1
                     If speed > 180 Then
                         ground = 1

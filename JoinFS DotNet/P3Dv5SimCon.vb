@@ -163,6 +163,8 @@ Public Class P3Dv5SimCon
     Public Shared Sub p3d_simconnect_OnRecvObj(ByVal sender As SimConnect, ByVal data As SIMCONNECT_RECV_ASSIGNED_OBJECT_ID)
         Dim aircraftId = data.dwObjectID
         AddLogItem(aircraftId.ToString)
+        ' do something with the aircraft id
+
     End Sub
     Public Shared Sub p3d_simconnect_OnRecvOpen(ByVal sender As SimConnect, ByVal data As SIMCONNECT_RECV_OPEN)
         If My.Settings.EnhancedLogs = True Then
