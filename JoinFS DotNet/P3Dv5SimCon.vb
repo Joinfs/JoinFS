@@ -255,10 +255,48 @@ Public Class P3Dv5SimCon
         Public OnGround As Integer ' 1 = on ground, 0 = in air
         Public Airspeed As Double ' knots
     End Structure
-    Enum AI_AIRCRAFT_TYPE
-        A320 = 0
-        B747 = 1
-        B737 = 2
+    Enum AI_AIRCRAFT_TYPE As UInteger
+        B747_800 = 0
+        ASOBO_A320_NEO = 1
+        TBM_930 = 2
+        CJ4 = 3
+        B787_10 = 4
+        B747_8_INTERCONTINENTAL = 5
+        SR22 = 6
+        DA62 = 7
+        XCUB = 8
+        BEECHCRAFT_BARON_G58 = 9
+        AIRLINER = 10
+        GENERIC_SMALL = 11
+        GENERIC_MEDIUM = 12
+        GENERIC_LARGE = 13
+        HELICOPTER_GENERIC = 14
+        AIRLINER_ASBO_A320_NEO = 15
+        B787_10_ASBO = 16
+        B747_8_ASBO = 17
+        ASBO_TBM930 = 18
+        ASBO_CJ4 = 19
+        ASBO_SR22 = 20
+        ASBO_DA62 = 21
+        ASBO_XCUB = 22
+        ASBO_BEECHCRAFT_BARON_G58 = 23
+        ASBO_CESSNA_208B_GRAND_CARAVAN_EX = 24
+        ASBO_BEECHCRAFT_BONANZA_G36 = 25
+        ASBO_DIAMOND_DA40_NG = 26
+        ASBO_EXTRA_330LT = 27
+        ASBO_AVIAT_A_32L = 28
+        ASBO_BOEING_747_8_INTERCONTINENTAL = 29
+        ASBO_DIAMOND_DA62 = 30
+        ASBO_EXTRA_330LT_BLUE = 31
+        ASBO_SHOCK_ULTRA = 32
+        ASBO_PIPER_PA_28R_TURBO_ARROW_III = 33
+        ASBO_PIPER_M350 = 34
+        ASBO_PIPER_PA_46_MALIBU_MIRAGE = 35
+        ASBO_CESSNA_CJ4_GEN2 = 36
+        ASBO_ROBIN_DR401_CD = 37
+        ASBO_BOEING_787_10_DREAMLINER = 38
+        A320 = 39
+        B747_400 = 40
     End Enum
     Private Shared Function IsFLAIModel(title As String) As Boolean
         ' Check if the aircraft title matches an FLAI model

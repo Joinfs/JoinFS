@@ -49,7 +49,6 @@ Public Class Functions
     End Function
     Public Shared Function saveLog()
         Dim file As System.IO.StreamWriter
-
         Dim appData As String = GetFolderPath(SpecialFolder.ApplicationData)
         If My.Settings.SaveLogs = True Then
             '  save logs to local C drive.
@@ -84,9 +83,8 @@ Public Class Functions
         AddLogItem("Saved Settings to Settings.XML file.")
         Return Nothing
     End Function
-    Public Shared Function DeleteOldestFiles(folderPath As String,
-                             filesToKeep As Integer,
-                             Optional searchPattern As String = "*.*")
+    Public Shared Function DeleteOldestFiles(folderPath As String, filesToKeep As Integer, Optional searchPattern As String = "*.*")
+        'This function delets old files from the main directory for cleaning up logs.
         Dim folder As New DirectoryInfo(folderPath)
         Dim files = folder.GetFiles(searchPattern).OrderByDescending(Function(fi) fi.CreationTime)
 
@@ -95,6 +93,7 @@ Public Class Functions
         Next
     End Function
     Public Shared Function RandomString()
+        ' This creates a random string of characters to be used for the random code at launch and to be sent as a client identifer to the server, so we know not to duplicate the same aircraft.
         Dim s As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         Dim r As New Random
         Dim sb As New StringBuilder
@@ -105,6 +104,7 @@ Public Class Functions
         Return sb.ToString()
     End Function
     Public Shared Function getSettings()
+        ' This function loads the settings.xml when opening the system.
         'Load the XML file into an XML document
         Dim xmlDoc As New XmlDocument()
         Dim appData As String = GetFolderPath(SpecialFolder.ApplicationData)
@@ -137,6 +137,7 @@ Public Class Functions
     End Function
 
     Public Shared Function BandwidthMode()
+        ' This function serves as a way to limit the bandwith for those who have slow/metered connections. 
         Dim mode = My.Settings.LowBandwidth
         If mode = "Normal" Then
             AddLogItem("Bandwidth Mode changed to: Normal, Updates ever 1/2 Second.")
@@ -165,7 +166,7 @@ Public Class Functions
     End Function
 
     Public Shared Async Function CloseJoinFS() As Task
-        ' Close JoinFS system and save logs.
+        ' Close JoinFS system, disconnect from the network, and save logs.
         Await API("Stop")
         AddLogItem("JoinFS System Closed")
         saveLog()
