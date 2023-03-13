@@ -23,6 +23,7 @@ Imports System.Text.RegularExpressions
 Public Class P3Dv5SimCon
     Public Shared p3d_simconnect As SimConnect = Nothing
     Private Const WM_USER_SIMCONNECT As Integer = &H402
+    Public Shared addedObjectIds As New Dictionary(Of Integer, Boolean)()
 
     Enum StructDefinitions
 
@@ -162,7 +163,15 @@ Public Class P3Dv5SimCon
     End Sub
     Public Shared Sub p3d_simconnect_OnRecvObj(ByVal sender As SimConnect, ByVal data As SIMCONNECT_RECV_ASSIGNED_OBJECT_ID)
         Dim aircraftId = data.dwObjectID
-        AddLogItem(aircraftId.ToString)
+
+        If addedObjectIds.ContainsKey(aircraftId) AndAlso addedObjectIds(aircraftId) Then
+            ' Object ID has already been added
+        Else
+            AddLogItem(aircraftId.ToString + " adding to dictonary")
+            addedObjectIds.Add(aircraftId, True)
+
+            ' Object ID has not been added yet
+        End If
         ' do something with the aircraft id
 
     End Sub
@@ -327,6 +336,7 @@ Public Class P3Dv5SimCon
         End If
 
         Return Nothing
+
 
     End Function
 
