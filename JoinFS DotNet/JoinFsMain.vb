@@ -19,7 +19,15 @@ Imports Newtonsoft.Json.Linq
 Imports System.Runtime.CompilerServices
 
 Public Class JoinFsMain
-    Private Const WM_USER_SIMCONNECT As Integer = &H402
+    Public Const WM_USER_SIMCONNECT As Integer = &H402
+    Public Const NOTIFICATION_GROUP_ID As Integer = 1
+    Public Const DEFINITION_OBJECT_ID As Integer = 0
+    Public Const REQUEST_OBJECT_ID As Integer = 1
+    Public Const EVENT_SIM_START As Integer = 0
+    Private Const SIMCONNECT_PERIOD_SECOND As Integer = 1000
+    Private Const SIMCONNECT_DATA_REQUEST_FLAG_CHANGED As Integer = &H1
+    Private ObjectIDs As Dictionary(Of UInteger, String) = New Dictionary(Of UInteger, String)
+
     Private Async Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         AddLogItem("User chose the Exit Menu from the File Menu")
         Await CloseJoinFS()
@@ -92,6 +100,7 @@ Public Class JoinFsMain
                         If My.Settings.EnhancedLogs = True Then
                             AddLogItem("Added Handler for exceptions")
                         End If
+                        ' Add Handlers for objectids
                         ConnectedText.Text = "Simulator Connected"
                         Button3.BackColor = Color.Green
                         SimTimer.Enabled = True
@@ -119,7 +128,14 @@ Public Class JoinFsMain
             Button3.BackColor = Color.Red
         End If
     End Sub
-
+    Public Function GetObjectIDByCallsign(callsign As String) As UInteger
+        For Each pair As KeyValuePair(Of UInteger, String) In ObjectIDs
+            If pair.Value = callsign Then
+                Return pair.Key
+            End If
+        Next
+        Return 0 ' Return 0 if the callsign is not found
+    End Function
     Private Sub SimTimer_Tick(sender As Object, e As EventArgs) Handles SimTimer.Tick
         ' Run a script to get the latest location of the aircraft that is handled by the p3d simulator
         If My.Settings.Simulator = "P3Dv5" Then
