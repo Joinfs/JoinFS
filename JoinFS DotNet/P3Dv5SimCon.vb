@@ -73,11 +73,12 @@ Public Class P3Dv5SimCon
 
     End Class
 
-    Public Shared Sub closeConnection()
+    Public Shared Async Sub closeConnection()
         If p3d_simconnect IsNot Nothing Then
             p3d_simconnect.Dispose()
             p3d_simconnect = Nothing
             JoinFsMain.ConnectedText.Text = "Connection to Simulator Closed"
+            Await API("Stop")
             ' Set the simulator button to red, and cancel the timer.
             JoinFsMain.SimTimer.Enabled = False
             JoinFsMain.Button3.BackColor = Color.Red

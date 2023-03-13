@@ -72,7 +72,7 @@ Public Class JoinFsMain
         Process.Start("explorer.exe", MainVariables.supportLink)
     End Sub
 
-    Private Async Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         If (Button3.BackColor = Color.Red) Then
             If p3d_simconnect Is Nothing Then
                 If (My.Settings.Simulator = "P3Dv5" Or My.Settings.Simulator = "MSFS" Or My.Settings.Simulator = "") Then
@@ -113,7 +113,6 @@ Public Class JoinFsMain
             End If
         Else
             AddLogItem("Disconnected from simulator")
-            Await API("Stop")
             ConnectedText.Text = "Simulator Disconnected"
             SimTimer.Enabled = False
             closeConnection()
