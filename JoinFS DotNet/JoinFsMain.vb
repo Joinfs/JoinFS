@@ -92,6 +92,7 @@ Public Class JoinFsMain
                         initDataRequest()
                         AddHandler p3d_simconnect.OnRecvOpen, New SimConnect.RecvOpenEventHandler(AddressOf p3d_simconnect_OnRecvOpen)
                         AddHandler p3d_simconnect.OnRecvQuit, New SimConnect.RecvQuitEventHandler(AddressOf p3d_simconnect_OnRecvQuit)
+                        AddHandler p3d_simconnect.OnRecvAssignedObjectId, New SimConnect.RecvAssignedObjectIdEventHandler(AddressOf p3d_simconnect_OnRecvObj)
                         If My.Settings.EnhancedLogs = True Then
                             AddLogItem("Added Handler for open/quit messages")
                         End If
