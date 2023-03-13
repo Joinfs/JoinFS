@@ -22,29 +22,17 @@ Source Code Visible from GitHub!</Description>
     <Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" />
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" />
 
   <ItemGroup>
     <Import Include="FSUIPC.bas" />
@@ -60,11 +48,8 @@ Source Code Visible from GitHub!</Description>
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="LockheedMartin.Prepar3D.SimConnect">
-      <HintPath>..\..\..\..\..\..\Program Files\Lockheed Martin\Prepar3D v5 SDK 5.3.17.28160\lib\SimConnect\managed\LockheedMartin.Prepar3D.SimConnect.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.FlightSimulator.SimConnect">
-      <HintPath>I:\JoinFS\JoinFS\FSX\Microsoft.FlightSimulator.SimConnect.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\JoinFS\Microsoft.FlightSimulator.SimConnect.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -99,9 +84,6 @@ Source Code Visible from GitHub!</Description>
 
   <ItemGroup>
     <None Update="FSUIPC.bas">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Microsoft.FlightSimulator.SimConnect.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="My Project\Application.myapp">
